@@ -2,12 +2,13 @@ package eucdiv
 
 import (
 	"errors"
+	"fmt"
 	"math"
 )
 
 type eucdivresult struct {
 	Quotient  int
-	Remainder int
+	Remainder float64
 }
 
 func Eucdiv(dividend, divisor float64) (result eucdivresult, err error) {
@@ -20,7 +21,7 @@ func Eucdiv(dividend, divisor float64) (result eucdivresult, err error) {
 	}
 
 	var quotient int
-	var remainder int
+	var remainder float64
 	var proceed bool
 	var negative bool
 
@@ -32,14 +33,15 @@ func Eucdiv(dividend, divisor float64) (result eucdivresult, err error) {
 		negative = false
 	}
 
-	for proceed == true {
+	for proceed {
 		if math.Abs(dividend) < math.Abs(divisor) {
-			remainder = int(math.Abs(dividend))
+			remainder = math.Abs(dividend)
 			proceed = false
 		} else {
 			dividend = math.Abs(dividend) - math.Abs(divisor)
-			quotient += 1
+			quotient = quotient + 1
 		}
+		fmt.Println(quotient, remainder, dividend, divisor, proceed)
 	}
 
 	if negative {
